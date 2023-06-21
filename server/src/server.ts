@@ -1,12 +1,25 @@
 import fastify  from 'fastify'
-import { PrismaClient } from '@prisma/client'
+import cors from '@fastify/cors'
+import { memoriesRoutes } from './routes/memories'
 const app = fastify()
-const prisma = new PrismaClient()
+// app.register(multipart)
 
-app.get('/users', async () => {
-    const users = await prisma.user.findMany()
-    return users
+// app.register(require('@fastify/static'), {
+//   root: resolve(__dirname, '../uploads'),
+//   prefix: '/uploads/',
+// })
+
+app.register(cors, {
+  origin: true,
 })
+
+// app.register(jwt, {
+//   secret: 'spacetime',
+// })
+
+// app.register(authRoutes)
+// app.register(uploadRoutes)
+app.register(memoriesRoutes)
 
 app.listen(
     {
